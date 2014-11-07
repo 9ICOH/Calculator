@@ -1,0 +1,17 @@
+﻿
+input[type="submit"] {
+	height: 60px;
+	width: 60px;
+	border: 1px solid #7BC574;
+	border-radius: 2px;
+	color: black;
+	font-size: 23px;
+	font-weight: bold;
+	cursor: pointer;
+}
+
+table{
+    border: 1px solid black
+}
+
+

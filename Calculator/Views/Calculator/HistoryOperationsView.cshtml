@@ -1,0 +1,14 @@
+﻿@model IEnumerable<Calculator.Models.Operation>
+
+<div class="result">
+    <table>
+        <thead><tr><td>Выражение = Результат</td></tr></thead>
+        <tbody id="expressionsList">
+            @foreach (var operation in Model)
+            {
+                <tr>@operation.Expression = @operation.Result</tr>
+            }
+        </tbody>
+
+    </table>
+</div>
