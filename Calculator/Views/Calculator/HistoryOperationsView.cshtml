@@ -2,11 +2,17 @@
 
 <div class="result">
     <table>
-        <thead><tr><td>Выражение = Результат</td></tr></thead>
+        <thead>
+            <tr>
+                <td style=" border: 5px solid black">
+                    Выражение = Результат
+                </td>
+            </tr>
+        </thead>
         <tbody id="expressionsList">
             @foreach (var operation in Model)
             {
-                <tr>@operation.Expression = @operation.Result</tr>
+                <tr><td>@operation.Expression = @operation.Result</td></tr>
             }
         </tbody>
 

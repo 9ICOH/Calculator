@@ -20,5 +20,10 @@ namespace Calculator.Data
         {
             return Find(o => o.Result == result);
         }
+
+        public IQueryable<Operation> GetAll()
+        {
+            return DbSet.AsQueryable();
+        }
     }
 }

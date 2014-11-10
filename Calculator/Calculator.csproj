@@ -128,9 +128,10 @@
   <ItemGroup>
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="Controllers\CalculatorController.cs" />
-    <Compile Include="CustomHtmlHelper.cs" />
     <Compile Include="Data\CalculatorDatabase.cs" />
+    <Compile Include="Data\Context.cs" />
     <Compile Include="Data\EfRepository.cs" />
+    <Compile Include="Data\IContext.cs" />
     <Compile Include="Data\IOperationRepository.cs" />
     <Compile Include="Data\IRepository.cs" />
     <Compile Include="Data\OperationRepository.cs" />
@@ -138,9 +139,10 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Operation.cs" />
-    <Compile Include="Models\Operators.cs" />
     <Compile Include="Models\ResultViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IOperationService.cs" />
+    <Compile Include="Services\OperationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\FilterConfig.cs" />

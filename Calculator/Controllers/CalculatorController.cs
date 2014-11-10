@@ -1,4 +1,6 @@
-﻿using Calculator.Models;
+﻿using Calculator.Data;
+using Calculator.Models;
+using Calculator.Services;
 using Microsoft.CSharp;
 using System;
 using System.CodeDom.Compiler;
@@ -11,18 +13,23 @@ namespace Calculator.Controllers
 {
     public class CalculatorController : Controller
     {
+        private IContext dataContext;
+        private OperationService opService;
         private const string ModelName = "resultVm";
-        private readonly List<string> operation = new List<string>();
         private ResultViewModel resultVm;
 
         public CalculatorController()
         {
+            this.dataContext = new Context();
+            this.opService = new OperationService(this.dataContext);
+
             if (Session == null)
             {
                 this.resultVm = new ResultViewModel()
                 {
                     OutputLine = "0",
-                    LastExpression = "0"
+                    LastExpression = "0",
+                    OperationsHistory = this.opService.All()
                 };
             }
         }
@@ -55,9 +62,9 @@ namespace Calculator.Controllers
                 case "*":
                 case "/":
                 case ".":
-                    if (this.resultVm.OutputLine == "0" | this.resultVm.OutputLine == this.resultVm.LastCountedResult)
+                    if (this.resultVm.OutputLine == "Error" | this.resultVm.OutputLine == "0" | this.resultVm.OutputLine == this.resultVm.LastCountedResult)
                     {
-                        this.resultVm.OutputLine = string.Empty;                        
+                        this.resultVm.OutputLine = string.Empty;
                     }
 
                     this.resultVm.OutputLine += submitButton;
@@ -68,6 +75,7 @@ namespace Calculator.Controllers
                     try
                     {
                         this.resultVm.LastCountedResult = (this.Compile<Calculate>(this.resultVm.OutputLine) as Calculate)();
+                        this.opService.Create(this.resultVm.OutputLine, this.resultVm.LastCountedResult);
                         this.resultVm.OutputLine = this.resultVm.LastCountedResult;
                     }
                     catch (Exception ex)
@@ -105,7 +113,7 @@ namespace Calculator.Controllers
                 {{ 
                     return ((double){0}).ToString({1}); 
                 }} 
-            }}", code, '\u0022'+"0.00000"+'\u0022');
+            }}", code, '\u0022' + "0.00000" + '\u0022');
 
             CompilerParameters compilerParameters = new CompilerParameters();
             compilerParameters.GenerateInMemory = true;
@@ -117,9 +125,20 @@ namespace Calculator.Controllers
                 return Delegate.CreateDelegate(typeof(T), compileResults.CompiledAssembly.GetType("Calculator").GetMethod("Invoke"));
         }
 
-        public IEnumerable<Operation> GetOperations()
+        public ActionResult GetOperations()
         {
-            throw new NotImplementedException();
+            var t = this.opService.All();
+            this.resultVm.OperationsHistory = t;
+            return View("Calculator", this.resultVm);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (this.dataContext != null)
+            {
+                this.dataContext.Dispose();
+            }
+            base.Dispose(disposing);
         }
 
 
