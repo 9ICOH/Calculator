@@ -77,6 +77,7 @@ namespace Calculator.Controllers
                         this.resultVm.LastCountedResult = (this.Compile<Calculate>(this.resultVm.OutputLine) as Calculate)();
                         this.opService.Create(this.resultVm.OutputLine, this.resultVm.LastCountedResult);
                         this.resultVm.OutputLine = this.resultVm.LastCountedResult;
+                        this.resultVm.OperationsHistory = this.opService.All();
                     }
                     catch (Exception ex)
                     {
@@ -113,7 +114,7 @@ namespace Calculator.Controllers
                 {{ 
                     return ((double){0}).ToString({1}); 
                 }} 
-            }}", code, '\u0022' + "0.00000" + '\u0022');
+            }}", code, '\u0022' + "0.#####" + '\u0022');
 
             CompilerParameters compilerParameters = new CompilerParameters();
             compilerParameters.GenerateInMemory = true;
@@ -123,13 +124,6 @@ namespace Calculator.Controllers
                 throw new Exception("Error");
             else
                 return Delegate.CreateDelegate(typeof(T), compileResults.CompiledAssembly.GetType("Calculator").GetMethod("Invoke"));
-        }
-
-        public ActionResult GetOperations()
-        {
-            var t = this.opService.All();
-            this.resultVm.OperationsHistory = t;
-            return View("Calculator", this.resultVm);
         }
 
         protected override void Dispose(bool disposing)
