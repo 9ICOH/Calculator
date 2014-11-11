@@ -1,19 +1,27 @@
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Calculator.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(Calculator.App_Start.NinjectWebCommon), "Stop")]
 
-namespace Calculator.App_Start
+using Calculator;
+
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(NinjectWebCommon), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(NinjectWebCommon), "Stop")]
+
+namespace Calculator
 {
     using System;
+    using System.Configuration;
     using System.Web;
+
+    using Calculator.Data;
+    using Calculator.Services;
 
     using Microsoft.Web.Infrastructure.DynamicModuleHelper;
 
     using Ninject;
     using Ninject.Web.Common;
+    using System.Data.Entity;
 
     public static class NinjectWebCommon 
     {
-        private static readonly Bootstrapper bootstrapper = new Bootstrapper();
+        private static readonly Bootstrapper Bootstrapper = new Bootstrapper();
 
         /// <summary>
         /// Starts the application
@@ -22,7 +30,7 @@ namespace Calculator.App_Start
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
-            bootstrapper.Initialize(CreateKernel);
+            Bootstrapper.Initialize(CreateKernel);
         }
         
         /// <summary>
@@ -30,7 +38,7 @@ namespace Calculator.App_Start
         /// </summary>
         public static void Stop()
         {
-            bootstrapper.ShutDown();
+            Bootstrapper.ShutDown();
         }
         
         /// <summary>
@@ -61,6 +69,13 @@ namespace Calculator.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Bind<IOperationRepository>().To<OperationRepository>();
+            kernel.Bind<IContext>().To<Context>();
+            kernel.Bind<IOperationService>().To<OperationService>();
+
+            kernel.Bind<DbContext>()
+                .ToSelf()
+                .WithConstructorArgument("connectionString", ConfigurationManager.ConnectionStrings[0].ConnectionString);
         }        
     }
 }

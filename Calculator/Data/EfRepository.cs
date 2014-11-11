@@ -8,19 +8,24 @@ namespace Calculator.Data
 {
     public class EfRepository<T> : IRepository<T> where T : class
     {
-        protected DbContext Context;
         protected readonly bool ShareContext;
 
-        public EfRepository(DbContext context) : this(context, false) { }
+        private readonly DbContext context;
+
+        public EfRepository(DbContext context)
+            : this(context, false)
+        {
+        }
+
         public EfRepository(DbContext context, bool sharedContext)
         {
-            this.Context = context;
+            this.context = context;
             this.ShareContext = sharedContext;
         }
 
         protected DbSet<T> DbSet
         {
-            get { return this.Context.Set<T>(); }
+            get { return this.context.Set<T>(); }
         }
 
         public IQueryable<T> All()
@@ -43,7 +48,7 @@ namespace Calculator.Data
             this.DbSet.Add(t);
             if (!this.ShareContext)
             {
-                this.Context.SaveChanges();
+                this.context.SaveChanges();
             }
 
             return t;
@@ -54,7 +59,7 @@ namespace Calculator.Data
             this.DbSet.Remove(t);
             if (!this.ShareContext)
             {
-                return this.Context.SaveChanges();
+                return this.context.SaveChanges();
             }
 
             return 0;
@@ -62,7 +67,7 @@ namespace Calculator.Data
 
         public int Delete(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
         {
-            var records = FindAll(predicate);
+            var records = this.FindAll(predicate);
             foreach (var record in records)
             {
                 this.DbSet.Remove(record);
@@ -70,7 +75,7 @@ namespace Calculator.Data
 
             if (!this.ShareContext)
             {
-                return this.Context.SaveChanges();
+                return this.context.SaveChanges();
             }
 
             return 0;
@@ -110,14 +115,14 @@ namespace Calculator.Data
 
         public int Update(T t)
         {
-            var entry = this.Context.Entry(t);
+            var entry = this.context.Entry(t);
             this.DbSet.Attach(t);
 
             entry.State = EntityState.Modified;
 
             if (!this.ShareContext)
             {
-                return this.Context.SaveChanges();
+                return this.context.SaveChanges();
             }
 
             return 0;
@@ -125,11 +130,11 @@ namespace Calculator.Data
 
         public void Dispose()
         {
-            if (!ShareContext && Context != null)
+            if (!this.ShareContext && this.context != null)
             {
                 try
                 {
-                    this.Context.Dispose();
+                    this.context.Dispose();
                 }
                 catch { }
 

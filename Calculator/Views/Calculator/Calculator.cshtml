@@ -1,6 +1,14 @@
-﻿@model Calculator.Models.ResultViewModel
+﻿@model ResultViewModel
 @{
     Layout = "~/Views/_Layout.cshtml";
+    var ajax = new AjaxOptions
+    {
+        UpdateTargetId = "personList",
+        Url = Url.Action("GetOperations"),
+        Confirm = "Вы действительно хотите это сделать?",
+        OnBegin = "CallMeOnBegin",
+        OnSuccess = "CallMeOnSuccess"
+    };
 }
 @section Header
 {
@@ -13,24 +21,25 @@
 
 <!DOCTYPE html>
 
-
-
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Calculator</title>
+    <script type="text/javascript">
+        function CallMeOnBegin() {
+            alert('Сейчас будет выполнен асинхронный запрос');
+        }
+        function CallMeOnSuccess() {
+            alert('Выполнение асинхронного запроса закончено');
+        }
+
+    </script>
 </head>
 <body>
     <div>
-        <p>
-            <div style="margin: 0 0 4px; border: 1px solid black; width:275px; height: 50px">
-                <output name="outputLine" style="
-                            height: 50px;
-                          	width: 50px;
-                           	border-radius: 2px;
-                           	color: black;
-                         	font-size: 40px;
-                        	font-weight: bold; ">
+        <div id ="leftside" >
+            <div>
+                <output id="outputStile">
                     @Model.OutputLine
                 </output>
             </div>
@@ -39,82 +48,81 @@
             {
                 <table>
                     <tr>
-                        <td width="64" height="64" valign="middle">
+                        <td width="64" height="64">
                             <input name="submitButton" type="submit" value="(" />
                         </td>
-                        <td width="64" height="64" valign="middle">
+                        <td width="64" height="64">
                             <input name="submitButton" type="submit" value=")" />
                         </td>
-                        <td width="64" height="64" valign="middle">
+                        <td width="64" height="64">
                             <input name="submitButton" type="submit" value="DEL" />
                         </td>
-                        <td width="64" height="64" valign="middle">
+                        <td width="64" height="64">
                             <input name="submitButton" type="submit" value="AC" />
                         </td>
                     </tr>
                     <tr>
-                        <td width="64" height="64" valign="middle">
+                        <td width="64" height="64">
                             <input name="submitButton" type="submit" value="7" />
                         </td>
-                        <td width="64" height="64" valign="middle">
+                        <td width="64" height="64">
                             <input name="submitButton" type="submit" value="8" />
                         </td>
-                        <td width="64" height="64" valign="middle">
+                        <td width="64" height="64">
                             <input name="submitButton" type="submit" value="9" />
                         </td>
-                        <td width="64" height="64" valign="middle">
+                        <td width="64" height="64">
                             <input name="submitButton" type="submit" value="/" />
                         </td>
                     </tr>
                     <tr>
-                        <td width="64" height="64" valign="middle">
+                        <td width="64" height="64">
                             <input name="submitButton" type="submit" value="4" />
                         </td>
-                        <td width="64" height="64" valign="middle">
+                        <td width="64" height="64">
                             <input name="submitButton" type="submit" value="5" />
                         </td>
-                        <td width="64" height="64" valign="middle">
+                        <td width="64" height="64">
                             <input name="submitButton" type="submit" value="6" />
                         </td>
-                        <td width="64" height="64" valign="middle">
+                        <td width="64" height="64">
                             <input name="submitButton" type="submit" value="*" />
                         </td>
                     </tr>
                     <tr>
-                        <td width="64" height="64" valign="middle">
+                        <td width="64" height="64">
                             <input name="submitButton" type="submit" value="1" />
                         </td>
-                        <td width="64" height="64" valign="middle">
+                        <td width="64" height="64">
                             <input name="submitButton" type="submit" value="2" />
                         </td>
-                        <td width="64" height="64" valign="middle">
+                        <td width="64" height="64">
                             <input name="submitButton" type="submit" value="3" />
                         </td>
-                        <td width="64" height="64" valign="middle">
+                        <td width="64" height="64">
                             <input name="submitButton" type="submit" value="-" />
                         </td>
                     </tr>
-
                     <tr>
-                        <td width="64" height="64" valign="middle">
+                        <td width="64" height="64">
                             <input name="submitButton" type="submit" value="0" />
                         </td>
-                        <td width="64" height="64" valign="middle">
+                        <td width="64" height="64">
                             <input name="submitButton" type="submit" value="." />
                         </td>
-                        <td width="64" height="64" valign="middle">
+                        <td width="64" height="64">
                             <input name="submitButton" type="submit" value="=" />
                         </td>
-                        <td width="64" height="64" valign="middle">
+                        <td width="64" height="64">
                             <input name="submitButton" type="submit" value="+" />
                         </td>
                     </tr>
                 </table>
             }
-        </p>
-        <p>
+        </div>
+        <div id="rightside">
             @Html.Partial("HistoryOperationsView", Model.OperationsHistory)
-        </p>
+        </div>
     </div>
 </body>
 </html>

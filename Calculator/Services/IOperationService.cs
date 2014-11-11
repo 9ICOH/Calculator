@@ -1,8 +1,6 @@
 ﻿using Calculator.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace Calculator.Services
 {
@@ -11,6 +9,9 @@ namespace Calculator.Services
         Operation GetBy(int id);
 
         IEnumerable<Operation> All();
-        
+
+        Delegate Compile<T>(string code);
+
+        Operation Create(string exprs, string res);
     }
 }

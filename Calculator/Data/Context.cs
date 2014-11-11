@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
+﻿using System.Data.Entity;
 
 namespace Calculator.Data
 {
     public class Context : IContext
     {
         private readonly DbContext dbContext;
-        public Context(DbContext context = null, IOperationRepository operations = null)
+
+        public Context(DbContext context, IOperationRepository operations)
         {
             this.dbContext = context ?? new CalculatorDatabase();
             this.Operations = operations ?? new OperationRepository(this.dbContext, true);
