@@ -19,9 +19,10 @@ namespace Calculator
 
         [Inject]
         public IOperationService OpService { get; set; }
+
         public IController CreateController(RequestContext requestContext, string controllerName)
         {
-            var controller = new CalculatorController(this.Context, this.OpService);
+            var controller = new CalculatorController();
             return controller;
         }
 

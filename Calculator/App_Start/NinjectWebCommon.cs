@@ -7,6 +7,7 @@ using Calculator;
 namespace Calculator
 {
     using System;
+    using System.Configuration;
     using System.Web;
 
     using Calculator.Data;
@@ -67,13 +68,13 @@ namespace Calculator
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-          //kernel.Bind<IOperationRepository>().To<OperationRepository>();
+            kernel.Bind<IOperationRepository>().To<OperationRepository>();
             kernel.Bind<IContext>().To<Context>();
             kernel.Bind<IOperationService>().To<OperationService>();
 
-            //kernel.Bind<CalculatorDatabase>()
-            //    .ToSelf()
-            //    .WithConstructorArgument("connectionString", ConfigurationManager.ConnectionStrings[0].ConnectionString);
+            kernel.Bind<CalculatorDatabase>()
+                .ToSelf()
+                .WithConstructorArgument("connectionString", ConfigurationManager.ConnectionStrings[0].ConnectionString);
         }        
     }
 }

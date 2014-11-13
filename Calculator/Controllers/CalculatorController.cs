@@ -8,6 +8,7 @@ using System.Web.Mvc;
 namespace Calculator.Controllers
 {
     using System.Collections.Generic;
+    using System.Configuration;
 
     public class CalculatorController : Controller
     {
@@ -19,10 +20,10 @@ namespace Calculator.Controllers
 
         private ResultViewModel resultVm;
 
-        public CalculatorController(IContext context, IOperationService operationService)
+        public CalculatorController()
         {
-            this.dataContext = context;//new Context();
-            this.opService = operationService;//new OperationService(this.dataContext);
+            this.dataContext = new Context(new CalculatorDatabase(ConfigurationManager.ConnectionStrings[0].ConnectionString));
+            this.opService = new OperationService(this.dataContext);
 
            // this.dataContext = dataContext;
            // this.opService = operationService;
@@ -89,7 +90,7 @@ namespace Calculator.Controllers
 
                         this.opService.Create(this.resultVm.OutputLine, this.resultVm.LastCountedResult);
                         this.resultVm.OutputLine = this.resultVm.LastCountedResult;
-                        this.resultVm.OperationsHistory = this.opService.All();
+                        //this.resultVm.OperationsHistory = this.opService.All();
                     }
                     catch (Exception ex)
                     {

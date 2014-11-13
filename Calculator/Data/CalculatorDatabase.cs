@@ -5,9 +5,9 @@ namespace Calculator.Data
 {
     public class CalculatorDatabase : DbContext
     {
-        public CalculatorDatabase()
-            : base("CalculatorConnection")
+        public CalculatorDatabase(string connectionString)
         {
+            Database.Connection.ConnectionString = connectionString;
         }
 
         public DbSet<Operation> Operations { get; set; }

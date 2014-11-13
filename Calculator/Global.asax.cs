@@ -11,7 +11,7 @@ namespace Calculator
     {
         protected void Application_Start()
         {
-            this.RegisterCustomControllerFactory();
+          //  this.RegisterCustomControllerFactory();
 
             AreaRegistration.RegisterAllAreas();
 
