@@ -11,11 +11,20 @@ namespace Calculator
     {
         protected void Application_Start()
         {
+            this.RegisterCustomControllerFactory();
+
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
+
+        private void RegisterCustomControllerFactory()
+        {
+            IControllerFactory factory = new CustomControllerFactory();
+            ControllerBuilder.Current.SetControllerFactory(factory);
+        }
+
     }
 }

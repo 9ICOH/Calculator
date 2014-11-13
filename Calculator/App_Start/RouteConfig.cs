@@ -13,11 +13,6 @@ namespace Calculator
                 name: "Calculator",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Calculator", action = "Calculator", id = UrlParameter.Optional });
-
-            routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional });
         }
     }
 }

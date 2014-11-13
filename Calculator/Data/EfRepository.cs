@@ -132,11 +132,11 @@ namespace Calculator.Data
         {
             if (!this.ShareContext && this.context != null)
             {
-                try
-                {
+              //  try
+              //  {
                     this.context.Dispose();
-                }
-                catch { }
+             //   }
+             //   catch { }
 
             }
         }

@@ -6,10 +6,10 @@ namespace Calculator.Data
     {
         private readonly DbContext dbContext;
 
-        public Context(DbContext context, IOperationRepository operations)
+        public Context(DbContext context = null, IOperationRepository operations = null)
         {
             this.dbContext = context ?? new CalculatorDatabase();
-            this.Operations = operations ?? new OperationRepository(this.dbContext, true);
+            this.Operations = operations ?? new OperationRepository(this.dbContext);
         }
 
         public IOperationRepository Operations
@@ -27,11 +27,11 @@ namespace Calculator.Data
         {
             if (this.dbContext != null)
             {
-                try
-                {
+               // try
+              //  {
                     this.dbContext.Dispose();
-                }
-                catch { }
+              //  }
+              //  catch { }
             }
         }
     }
