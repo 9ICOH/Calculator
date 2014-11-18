@@ -114,9 +114,9 @@ namespace Calculator.Controllers
             }
         }
 
-        public IEnumerable<Operation> GetOperations()
+        public ActionResult GetOperations()
         {
-            return this.opService.All();
+            return this.PartialView("HistoryOperationsView", this.opService.All());
         }
 
         protected override void Dispose(bool disposing)

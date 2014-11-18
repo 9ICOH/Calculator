@@ -8,8 +8,9 @@
     };
     var ajax = new AjaxOptions
     {
-        UpdateTargetId = "leftside",
+        UpdateTargetId = "outputStile",
         Url = Url.Action("SetSymbol"),
+        
     };
 }
 @section Header
@@ -38,91 +39,88 @@
             </div>
             <output name="lastExpression">@Model.LastExpression</output>
 
-            @* @using (Ajax.BeginForm(ajax))*@
-            @using (Html.BeginForm("SetSymbol", "Calculator", FormMethod.Post))
+            @*@using (Html.BeginForm("SetSymbol", "Calculator", FormMethod.Post))*@
+            @using (Ajax.BeginForm(ajax.))
             {
-                <table>
-                    <tr>
-                        <td width="64" height="64">
-                            <input name="submitButton" type="submit" value="(" />
-                        </td>
-                        <td width="64" height="64">
-                            <input name="submitButton" type="submit" value=")" />
-                        </td>
-                        <td width="64" height="64">
-                            <input name="submitButton" type="submit" value="DEL" />
-                        </td>
-                        <td width="64" height="64">
-                            <input name="submitButton" type="submit" value="AC" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="64" height="64">
-                            <input name="submitButton" type="submit" value="7" />
-                        </td>
-                        <td width="64" height="64">
-                            <input name="submitButton" type="submit" value="8" />
-                        </td>
-                        <td width="64" height="64">
-                            <input name="submitButton" type="submit" value="9" />
-                        </td>
-                        <td width="64" height="64">
-                            <input name="submitButton" type="submit" value="/" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="64" height="64">
-                            <input name="submitButton" type="submit" value="4" />
-                        </td>
-                        <td width="64" height="64">
-                            <input name="submitButton" type="submit" value="5" />
-                        </td>
-                        <td width="64" height="64">
-                            <input name="submitButton" type="submit" value="6" />
-                        </td>
-                        <td width="64" height="64">
-                            <input name="submitButton" type="submit" value="*" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="64" height="64">
-                            <input name="submitButton" type="submit" value="1" />
-                        </td>
-                        <td width="64" height="64">
-                            <input name="submitButton" type="submit" value="2" />
-                        </td>
-                        <td width="64" height="64">
-                            <input name="submitButton" type="submit" value="3" />
-                        </td>
-                        <td width="64" height="64">
-                            <input name="submitButton" type="submit" value="-" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td width="64" height="64">
-                            <input name="submitButton" type="submit" value="0" />
-                        </td>
-                        <td width="64" height="64">
-                            <input name="submitButton" type="submit" value="." />
-                        </td>
-                        <td width="64" height="64">
+            <table>
+                <tr>
+                    <td width="64" height="64">
+                        <input name="submitButton" type="submit" value="(" />
+                    </td>
+                    <td width="64" height="64">
+                        <input name="submitButton" type="submit" value=")" />
+                    </td>
+                    <td width="64" height="64">
+                        <input name="submitButton" type="submit" value="DEL" />
+                    </td>
+                    <td width="64" height="64">
+                        <input name="submitButton" type="submit" value="AC" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="64" height="64">
+                        <input name="submitButton" type="submit" value="7" />
+                    </td>
+                    <td width="64" height="64">
+                        <input name="submitButton" type="submit" value="8" />
+                    </td>
+                    <td width="64" height="64">
+                        <input name="submitButton" type="submit" value="9" />
+                    </td>
+                    <td width="64" height="64">
+                        <input name="submitButton" type="submit" value="/" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="64" height="64">
+                        <input name="submitButton" type="submit" value="4" />
+                    </td>
+                    <td width="64" height="64">
+                        <input name="submitButton" type="submit" value="5" />
+                    </td>
+                    <td width="64" height="64">
+                        <input name="submitButton" type="submit" value="6" />
+                    </td>
+                    <td width="64" height="64">
+                        <input name="submitButton" type="submit" value="*" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="64" height="64">
+                        <input name="submitButton" type="submit" value="1" />
+                    </td>
+                    <td width="64" height="64">
+                        <input name="submitButton" type="submit" value="2" />
+                    </td>
+                    <td width="64" height="64">
+                        <input name="submitButton" type="submit" value="3" />
+                    </td>
+                    <td width="64" height="64">
+                        <input name="submitButton" type="submit" value="-" />
+                    </td>
+                </tr>
+                <tr>
+                    <td width="64" height="64">
+                        <input name="submitButton" type="submit" value="0" />
+                    </td>
+                    <td width="64" height="64">
+                        <input name="submitButton" type="submit" value="." />
+                    </td>
+                    <td width="64" height="64">
+                        @using (Ajax.BeginForm(history))
+                        {
                             <input name="submitButton" type="submit" value="=" />
-                        </td>
-                        <td width="64" height="64">
-                            <input name="submitButton" type="submit" value="+" />
-                        </td>
-                    </tr>
-                </table>
+                        }
+                    </td>
+                    <td width="64" height="64">
+                        <input name="submitButton" type="submit" value="+" />
+                    </td>
+                </tr>
+            </table>
             }
         </div>
 
-        <div id="rightside">
-            @using (Ajax.BeginForm(history))
-            {
-                @Html.Partial("HistoryOperationsView", Model.OperationsHistory)
-            }
-            <input type="submit" value="Вывести список людей" />
-        </div>
+        <div id="rightside"></div>
     </div>
 </body>
 </html>
