@@ -20,13 +20,11 @@ namespace Calculator.Controllers
 
         private ResultViewModel resultVm;
 
-        public CalculatorController()
+        public CalculatorController(IContext dataContext, IOperationService operationService)
         {
-            this.dataContext = new Context(new CalculatorDatabase(ConfigurationManager.ConnectionStrings[0].ConnectionString));
-            this.opService = new OperationService(this.dataContext);
 
-           // this.dataContext = dataContext;
-           // this.opService = operationService;
+            this.dataContext = dataContext;
+            this.opService = operationService;
 
             if (this.Session == null)
             {

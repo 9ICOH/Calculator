@@ -6,10 +6,10 @@ namespace Calculator.Data
     {
         private readonly DbContext dbContext;
 
-        public Context(CalculatorDatabase context, IOperationRepository operations = null)
+        public Context(CalculatorDatabase context, IOperationRepository operations)
         {
             this.dbContext = context;
-            this.Operations = operations ?? new OperationRepository(this.dbContext);
+            this.Operations = operations;
         }
 
         public IOperationRepository Operations
