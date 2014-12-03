@@ -10,8 +10,9 @@
     {
         UpdateTargetId = "outputStile",
         Url = Url.Action("SetSymbol"),
-        
+
     };
+
 }
 @section Header
 {
@@ -29,7 +30,21 @@
     <meta name="viewport" content="width=device-width" />
     <title>Calculator</title>
 </head>
+
 <body>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('input#result').click(function () {
+                alert('I was clicked!');
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        var buttonNames = ["(", ")", "DEl", "AC", "7", "8", "9", "/", "4", "5", "6", "*", "1", "2", "3", "-", "0", ".", "=", "+"];
+
+    </script>
+
     <div>
         <div id="leftside">
             <div>
@@ -39,8 +54,9 @@
             </div>
             <output name="lastExpression">@Model.LastExpression</output>
 
-            @*@using (Html.BeginForm("SetSymbol", "Calculator", FormMethod.Post))*@
-            @using (Ajax.BeginForm(ajax.))
+
+            @*@using (Ajax.BeginForm(ajax.))*@
+           @* @using (Html.BeginForm("SetSymbol", "Calculator", FormMethod.Post))*@
             {
             <table>
                 <tr>
@@ -109,7 +125,7 @@
                     <td width="64" height="64">
                         @using (Ajax.BeginForm(history))
                         {
-                            <input name="submitButton" type="submit" value="=" />
+                            <input id="result" name="submitButton" type="submit" value="=" />
                         }
                     </td>
                     <td width="64" height="64">

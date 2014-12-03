@@ -75,6 +75,7 @@ namespace Calculator.Controllers
 
                     this.resultVm.OutputLine += submitButton;
                     this.resultVm.LastExpression = this.resultVm.OutputLine;
+
                     this.Session[ModelName] = this.resultVm;
                     return this.View("Calculator", this.resultVm);
                 case "=":
