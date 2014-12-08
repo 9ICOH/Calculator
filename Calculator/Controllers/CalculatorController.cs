@@ -75,7 +75,6 @@ namespace Calculator.Controllers
 
                     this.resultVm.OutputLine += submitButton;
                     this.resultVm.LastExpression = this.resultVm.OutputLine;
-
                     this.Session[ModelName] = this.resultVm;
                     return this.View("Calculator", this.resultVm);
                 case "=":
@@ -112,6 +111,28 @@ namespace Calculator.Controllers
                     return this.View("Calculator", this.resultVm);
                 default:
                     return this.View("Calculator", this.resultVm);
+            }
+        }
+
+        [HttpPost]
+        public string GetResult(string expression)
+        {
+
+            try
+            {
+                var result = "0";
+                var calcMethod = this.opService.Compile<Calculate>(expression) as Calculate;
+                if (calcMethod != null)
+                {
+                    result = calcMethod();
+                }
+
+                this.opService.Create(expression, result);
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return ex.Message;
             }
         }
 
