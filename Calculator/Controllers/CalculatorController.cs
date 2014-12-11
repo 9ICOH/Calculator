@@ -12,40 +12,25 @@ namespace Calculator.Controllers
 
     public class CalculatorController : Controller
     {
-        private const string ModelName = "resultVm";
-
         private readonly IContext dataContext;
 
         private readonly IOperationService opService;
-
-        private ResultViewModel resultVm;
 
         public CalculatorController(IContext dataContext, IOperationService operationService)
         {
 
             this.dataContext = dataContext;
             this.opService = operationService;
-
-            if (this.Session == null)
-            {
-                this.resultVm = new ResultViewModel
-                {
-                    OutputLine = "0",
-                    LastExpression = "0",
-                    OperationsHistory = this.opService.All()
-                };
-            }
         }
 
         public ActionResult Calculator()
         {
-            return this.View(this.resultVm);
+            return this.View();
         }
 
         [HttpPost]
         public string GetResult(string expression)
         {
-
             try
             {
                 var result = "0";
@@ -79,7 +64,5 @@ namespace Calculator.Controllers
 
             base.Dispose(disposing);
         }
-
-
     }
 }

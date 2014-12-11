@@ -36,7 +36,8 @@ namespace Calculator.App_Start
 
         private void AddBindings()
         {
-            this.kernel.Bind<CalculatorDatabase>().ToSelf().WithConstructorArgument(ConfigurationManager.ConnectionStrings[0].ConnectionString);
+            var t = ConfigurationManager.ConnectionStrings[1].ConnectionString;
+            this.kernel.Bind<CalculatorDatabase>().ToSelf().WithConstructorArgument(t);
             this.kernel.Bind<IOperationRepository>().To<OperationRepository>();
             this.kernel.Bind<IContext>().To<Context>();
             this.kernel.Bind<IOperationService>().To<OperationService>();

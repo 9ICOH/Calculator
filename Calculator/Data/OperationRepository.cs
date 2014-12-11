@@ -6,7 +6,7 @@ namespace Calculator.Data
 {
     public class OperationRepository : EfRepository<Operation>, IOperationRepository
     {
-        public OperationRepository(CalculatorDatabase context, bool shredContext = true)
+        public OperationRepository(CalculatorDatabase context, bool shredContext = false)
             : base(context, shredContext)
         {
         }

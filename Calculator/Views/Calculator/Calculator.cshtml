@@ -64,10 +64,9 @@
                         output = result;
                     });
 
-
                 $.post('/Calculator/GetOperations').done(
                     function (view) {
-                        rightside.append(view);
+                        rightside.html(view);
                     });
             });
 
@@ -90,7 +89,7 @@
 
     <div>
         <div id="leftside">
-            <div>
+            <div id="border">
                 <output id="outputStile"></output>
             </div>
             <output id="lastExpression"></output>
